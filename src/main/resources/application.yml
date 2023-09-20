@@ -23,3 +23,9 @@ eureka:
 server:
   port: 8762
 
+zuul:
+  routes:
+    product-service:
+      path: /api/product/**
+      service-id: product-service
+      strip-prefix: false
