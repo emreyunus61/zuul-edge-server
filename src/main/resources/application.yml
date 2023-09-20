@@ -8,6 +8,15 @@ spring:
 info:
   component: Zuul Edge Server
 
+server:
+  port: 8762
+
+zuul:
+  routes:
+    product-service:
+      path: /api/product/**
+      service-id: product-service
+      strip-prefix: false
 ---
 
 spring:
@@ -20,12 +29,14 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${random.uuid}
 
-server:
-  port: 8762
+---
+spring:
+  profiles: stage
 
-zuul:
-  routes:
-    product-service:
-      path: /api/product/**
-      service-id: product-service
-      strip-prefix: false
+eureka:
+  client:
+    service-url:
+      default-zone: http://eureka-server:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+
